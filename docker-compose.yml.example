@@ -1,0 +1,24 @@
+version: "3.8"
+
+volumes:
+  db-store:
+
+services:
+  mssql:
+    image: mssql-server
+    container_name: mssql-server
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 1433:1433
+    volumes:
+      - db-store:/var/lib/mssql-server
+    environment:
+      - SA_PASSWORD=
+    networks:
+      - db-net
+
+networks:
+  db-net:
+    external: true

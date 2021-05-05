@@ -1,0 +1,56 @@
+1. docker-compose.yml を作成
+  docker-compose.yml.example をコピーしたファイルを作成し、
+  コピーしたファイルの名前を docker-compose.yml に変更
+
+2. docker-compose.yml を修正
+  ※そのまま使用する場合はSAパスワードのみ修正してください。
+  ・サービス名
+    services:
+      {サービス名}:
+  ・イメージ名
+    services:
+      {サービス名}:
+        image: {イメージ名}
+  ・コンテナ名
+    services:
+      {サービス名}:
+        container_name: {コンテナ名}
+  ・ポート番号
+    services:
+      {サービス名}:
+        ports:
+          - {ポート番号}:1433
+  ・SAパスワード
+    services:
+      {サービス名}:
+        environment:
+          - SA_PASSWORD={SAパスワード}
+  ・ネットワーク名
+    services:
+      {サービス名}:
+        networks:
+          - {ネットワーク名}
+    networks:
+      {ネットワーク名}
+
+3. Dockerネットワークを作成
+  ※指定ネットワークが既に登録されているならば作成不要
+  > docker network create {ネットワーク名}
+
+  ※既存のDockerネットワークの確認方法は以下コマンドにて
+  > docker network ls
+
+4. コンテナ構築
+  > make build
+
+5. コンテナ起動
+  > make up
+
+※コンテナ構築＆起動が完了したら、Azure Data Studio にて確認（SQL Serverの場合）
+＜接続情報＞
+・Server: localhost,{ポート番号}
+・Authentication type: SQL Login
+・User name: sa
+・Password: {SAパスワード}
+
+
